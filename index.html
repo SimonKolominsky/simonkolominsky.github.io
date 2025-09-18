@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrum Poker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🃏 Scrum Poker</h1>
+            <p class="subtitle">Планирование задач в команде</p>
+        </header>
+
+        <!-- Экран входа -->
+        <div id="loginScreen" class="screen active">
+            <div class="login-form">
+                <h2>Присоединиться к сессии</h2>
+                <div class="form-group">
+                    <label for="playerName">Ваше имя:</label>
+                    <input type="text" id="playerName" placeholder="Введите ваше имя" required>
+                </div>
+                <div class="form-group">
+                    <label for="sessionId">ID сессии:</label>
+                    <input type="text" id="sessionId" placeholder="session-1" value="session-1">
+                    <small>Используйте одинаковый ID для участия в одной сессии</small>
+                </div>
+                <button onclick="joinSession()" class="btn btn-primary">Присоединиться</button>
+            </div>
+        </div>
+
+        <!-- Основной экран игры -->
+        <div id="gameScreen" class="screen">
+            <div class="session-info">
+                <div class="session-header">
+                    <h3 id="currentSessionId"></h3>
+                    <div class="player-info">
+                        <span id="currentPlayerName"></span>
+                        <button onclick="leaveSession()" class="btn btn-secondary btn-sm">Покинуть</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <!-- Текущая задача -->
+                <div class="task-section">
+                    <h3>Текущая задача</h3>
+                    <div class="task-input">
+                        <input type="text" id="currentTask" placeholder="Описание задачи для оценки">
+                        <button onclick="updateTask()" class="btn btn-secondary">Обновить</button>
+                    </div>
+                    <div id="taskDisplay" class="task-display"></div>
+                </div>
+
+                <!-- Участники -->
+                <div class="players-section">
+                    <h3>Участники (<span id="playersCount">0</span>)</h3>
+                    <div id="playersList" class="players-grid"></div>
+                </div>
+
+                <!-- Карты для голосования -->
+                <div class="cards-section">
+                    <h3>Выберите вашу оценку</h3>
+                    <div class="cards-grid">
+                        <button class="card" data-value="0" onclick="selectCard(0)">0</button>
+                        <button class="card" data-value="1" onclick="selectCard(1)">1</button>
+                        <button class="card" data-value="2" onclick="selectCard(2)">2</button>
+                        <button class="card" data-value="3" onclick="selectCard(3)">3</button>
+                        <button class="card" data-value="5" onclick="selectCard(5)">5</button>
+                        <button class="card" data-value="8" onclick="selectCard(8)">8</button>
+                        <button class="card" data-value="13" onclick="selectCard(13)">13</button>
+                        <button class="card" data-value="21" onclick="selectCard(21)">21</button>
+                        <button class="card" data-value="?" onclick="selectCard('?')">?</button>
+                        <button class="card coffee" data-value="☕" onclick="selectCard('☕')">☕</button>
+                    </div>
+                </div>
+
+                <!-- Управление игрой -->
+                <div class="controls-section">
+                    <button onclick="revealCards()" class="btn btn-primary" id="revealBtn">Показать карты</button>
+                    <button onclick="resetVoting()" class="btn btn-secondary" id="resetBtn">Новое голосование</button>
+                </div>
+
+                <!-- Результаты -->
+                <div id="results" class="results-section" style="display: none;">
+                    <h3>Результаты голосования</h3>
+                    <div id="votingResults"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Статус синхронизации -->
+        <div id="syncStatus" class="sync-status">
+            <span id="syncIndicator">🔄</span>
+            <span id="syncText">Синхронизация...</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
